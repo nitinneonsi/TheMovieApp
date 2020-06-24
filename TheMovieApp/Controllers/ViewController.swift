@@ -9,12 +9,15 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    let jsonHelper = ServiceHelper()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        jsonHelper.getAPIData(page: 1, completion:{response in
+            print("Movies Data in VC : \(response)")
+        })
     }
-
-
 }
 
