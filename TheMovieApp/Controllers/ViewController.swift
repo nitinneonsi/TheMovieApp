@@ -12,10 +12,12 @@ class ViewController: UIViewController {
     
     let jsonHelper = ServiceHelper()
     var results = [Results]()
+    let movies = [Movies]()
     
     var pageNo = 1
 
     @IBOutlet weak var tableViewMovies: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,5 +45,39 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         cell.configCell(movie: result)
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == results.count-1
+        {
+            if results.count < jsonHelper.totalRecords
+            {
+                pageNo = pageNo+1
+                loadMoreRecords(page: pageNo)
+            }
+        }
+        
+        let lastSectionIndex = tableView.numberOfSections - 1
+        let lastRowIndex = tableView.numberOfRows(inSection: lastSectionIndex) - 1
+        if indexPath.section ==  lastSectionIndex && indexPath.row == lastRowIndex {
+            // print("this is the last cell")
+            let spinner = UIActivityIndicatorView(style: .gray)
+            spinner.color = UIColor.purple
+            spinner.startAnimating()
+            spinner.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: tableViewMovies.bounds.width, height: CGFloat(44))
+            
+            self.tableViewMovies.tableFooterView = spinner
+            self.tableViewMovies.tableFooterView?.isHidden = false
+        }
+    }
+    
+    func loadMoreRecords(page: Int) {
+        jsonHelper.getAPIData(page: page, completion:{[weak self] response in
+            
+            self?.results.append(contentsOf: response)
+            DispatchQueue.main.async {
+                self?.tableViewMovies.reloadData()
+            }
+        })
     }
 }

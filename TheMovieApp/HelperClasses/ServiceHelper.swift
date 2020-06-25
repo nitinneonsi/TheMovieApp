@@ -11,6 +11,7 @@ import Foundation
 class ServiceHelper {
     
     var results = [Results]()
+    var totalRecords = 0
     
     // Mark: Calling API
     func getAPIData(page: Int, completion: @escaping ([Results]) -> Void) {
@@ -23,11 +24,13 @@ class ServiceHelper {
             do {
                 let jsonDecoder = JSONDecoder()
                 let responseModel = try jsonDecoder.decode(Movies.self, from: data!)
-                
+                print("Page Number : ", responseModel.page ?? 0)
+                self.totalRecords = responseModel.total_results ?? 0
                 if let result = responseModel.results
                 {
                     self.results = result
                 }
+                
                 completion(self.results)
             }
             catch{
