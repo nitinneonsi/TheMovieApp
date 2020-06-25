@@ -11,7 +11,6 @@ import Foundation
 class ServiceHelper {
     
     var results = [Results]()
-    let numberOfItemsPerPage = 20
     
     // Mark: Calling API
     func getAPIData(page: Int, completion: @escaping ([Results]) -> Void) {
@@ -29,7 +28,6 @@ class ServiceHelper {
                 {
                     self.results = result
                 }
-                print("Response : \(responseModel)")
                 completion(self.results)
             }
             catch{
