@@ -42,9 +42,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableViewMovies.dequeueReusableCell(withIdentifier: "movieCell", for: indexPath) as! MoviesTableViewCell
-        
-        let result = results[indexPath.row]
-        cell.configCell(movie: result)
+
+        cell.configCell(movie: results[indexPath.row])
         
         return cell
     }

@@ -11,8 +11,14 @@ import XCTest
 
 class TheMovieAppTests: XCTestCase {
 
+    var viewControllerUnderTest: ViewController!
+    var MoviesUnderTest: Movies!
+    
     override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        viewControllerUnderTest = storyboard.instantiateViewController(withIdentifier: "viewController") as? ViewController
+        _ = viewControllerUnderTest.view
     }
 
     override func tearDown() {
@@ -31,4 +37,33 @@ class TheMovieAppTests: XCTestCase {
         }
     }
 
+    func testInitTableView(){
+        
+        XCTAssertNotNil(viewControllerUnderTest.tableViewMovies)
+    }
+    
+    func testTableViewHasDelegate() {
+        
+        XCTAssertNotNil(viewControllerUnderTest.tableViewMovies.delegate)
+    }
+    
+    func testTableViewHasDatasource() {
+
+        XCTAssertNotNil(viewControllerUnderTest.tableViewMovies.dataSource)
+    }
+    
+    func testTableViewConformsToTableViewDataSourceProtocol() {
+
+        XCTAssertTrue(viewControllerUnderTest.conforms(to: UITableViewDataSource.self))
+        XCTAssertTrue(viewControllerUnderTest.responds(to: #selector(viewControllerUnderTest.tableView(_:numberOfRowsInSection:))))
+        XCTAssertTrue(viewControllerUnderTest.responds(to: #selector(viewControllerUnderTest.tableView(_:cellForRowAt:))))
+    }
+    
+    func testDataInResult() {
+        XCTAssertNotNil(viewControllerUnderTest.results)
+    }
+    
+    func testMovies() {
+        XCTAssertNil(MoviesUnderTest)
+    }
 }

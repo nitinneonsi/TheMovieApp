@@ -12,11 +12,13 @@ class ServiceHelper {
     
     var results = [Results]()
     var totalRecords = 0
+    var baseURL = ""
     
     // Mark: Calling API
     func getAPIData(page: Int, completion: @escaping ([Results]) -> Void) {
         
-        let urlStr = URL(string: NetworkingConstants.baseUrl + NetworkingConstants.path + NetworkingConstants.apiKey + NetworkingConstants.pageNo + "\(page)")
+        baseURL = NetworkingConstants.baseUrl + NetworkingConstants.path
+        let urlStr = URL(string: baseURL + NetworkingConstants.apiKey + NetworkingConstants.pageNo + "\(page)")
         URLSession.shared.dataTask(with: urlStr!) { (data, response, error) in
             
             guard data != nil else{return}
