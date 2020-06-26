@@ -18,9 +18,11 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var tableViewMovies: UITableView!
     
+    // Mark: ViewController life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Mark: Calling API
         jsonHelper.getAPIData(page: pageNo, completion:{[weak self] response in
             
             self?.results = response
@@ -32,7 +34,7 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
-    // Mark: TableView Data Source
+    // Mark: TableView Delegate & Data Source
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return results.count
     }
@@ -60,7 +62,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         let lastSectionIndex = tableView.numberOfSections - 1
         let lastRowIndex = tableView.numberOfRows(inSection: lastSectionIndex) - 1
         if indexPath.section ==  lastSectionIndex && indexPath.row == lastRowIndex {
-            // print("this is the last cell")
+            // This is the last cell
             let spinner = UIActivityIndicatorView(style: .gray)
             spinner.color = UIColor.purple
             spinner.startAnimating()
@@ -71,6 +73,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    // Mark: Loding more records
     func loadMoreRecords(page: Int) {
         jsonHelper.getAPIData(page: page, completion:{[weak self] response in
             

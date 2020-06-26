@@ -34,6 +34,7 @@ class MoviesTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+    // Mark: Configuring Cell
     func configCell(movie: Results) {
         
         let readmoreFont = UIFont.systemFont(ofSize: 15.0)
@@ -71,7 +72,7 @@ class MoviesTableViewCell: UITableViewCell {
 }
 
 extension UILabel {
-    
+    // Mark: To show read more at the end of the label content
     func addTrailing(with trailingText: String, moreText: String, moreTextFont: UIFont, moreTextColor: UIColor) {
         let readMoreText: String = trailingText + moreText
         

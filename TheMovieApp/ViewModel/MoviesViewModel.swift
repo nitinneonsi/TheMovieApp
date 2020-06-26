@@ -10,7 +10,7 @@ import Foundation
 
 class MoviesViewModel {
     
-    // Mark: Formatting number for likes and comments
+    // Mark: Formatting number for votes
     func formatNumber(_ n: Int) -> String {
         
         let num = abs(Double(n))
@@ -56,6 +56,7 @@ extension Double {
 }
 
 extension String {
+    // Mark: Change date format
     func toDate(withFormat format: String) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
